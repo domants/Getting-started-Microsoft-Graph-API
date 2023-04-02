@@ -1,0 +1,27 @@
+In your browser, go to https://portal.azure.com/
+in the search bar search 'azure active directory', select azure active directory
+On the left side of your screen, select App registrations
+Select New registration > Enter name of your app > Accounts in this organizational directory only (Contoso only - Single tenant) > Register
+Select the App then select API permissions on the left pane.
+Select Add a permission to add Permissions to your graph API. you can find out more by going to website below.
+-https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0
+
+After you add the required permission to use graph API
+Select 'Grant admin consent for Contoso' to grand access.
+
+Go to make.powerautomate.com
+Create new power automate then for step select HTTP connector
+
+HTTP Connector settings:
+Go to App registrations and select the app you registered a while ago.
+You can see under the essentials the tenant ID, client ID
+
+Authentication: Active Directory OAuth
+Tenant: App Client ID tenant ID
+Audience: https://graph.microsoft.com
+Client ID: App Client ID
+Credential Type: Secret
+Secret: Copy the value of new created certificates & secrets
+
+also you can use query paramater to filter the result.
+eg -> https://graph.microsoft.com/v1.0/users?$filter=mail eq '@{triggerBody()['email']}'&$select=id
