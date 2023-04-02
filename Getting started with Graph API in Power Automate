@@ -39,3 +39,7 @@ client_id= {Application (client) ID}
 &scope= https://graph.microsoft.com/.default
 &client_secret= {App Secret}
 &grant_type=client_credentials
+
+
+Error when getting presence of user see link below how to fix:
+https://learn.microsoft.com/en-us/answers/questions/648061/graph-api-getpresence-returns-403-forbidden
