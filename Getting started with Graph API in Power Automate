@@ -1,3 +1,4 @@
+*----------------------------Registering App and creating PA----------------------------------------------------*
 In your browser, go to https://portal.azure.com/
 in the search bar search 'azure active directory', select azure active directory
 On the left side of your screen, select App registrations
@@ -26,9 +27,8 @@ Secret: Copy the value of new created certificates & secrets
 also you can use query paramater to filter the result.
 eg -> https://graph.microsoft.com/v1.0/users?$filter=mail eq '@{triggerBody()['email']}'&$select=id
 
-
-Generate access token:
-Add HTTP step:
+*--------------------------------Generate access token:------------------------------------------------*
+-Add HTTP step
 Method: POST
 URI: https://login.microsoftonline.com/{Directory (tenant) ID}/oauth2/v2.0/token
 Headers:
@@ -41,5 +41,13 @@ client_id= {Application (client) ID}
 &grant_type=client_credentials
 
 
-Error when getting presence of user see link below how to fix:
+*------------------------------Error when getting presence of user see link below how to fix:--------------------------------------------------*
+
 https://learn.microsoft.com/en-us/answers/questions/648061/graph-api-getpresence-returns-403-forbidden
+
+
+*---------------------------------Custom Connector----------------------------------------------*
+-When the http action doesn’t work, it will be worth having a look into the options of a custom connector.
+
+Create custom connector:
+https://medium.com/rapha%C3%ABl-pothin/create-a-custom-connector-for-microsoft-graph-581676585529
