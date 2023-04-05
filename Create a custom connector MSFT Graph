@@ -1,0 +1,215 @@
+Connect to the Azure portal
+Go to the Azure Active Directory service page
+Open the App registrations section in the left pane.
+Continue by clicking on the + New registration button
+Then, in the Register an application page, do the following actions:
+
+Enter a meaningful and understandable Name in the dedicated field (ex: MS Graph App)
+> Select the Account Types that will be able to access the application we are configuring (options described below)
+- Work Accounts in the current tenant only
+- Work Accounts in any tenant
+- Work Accounts in any tenant and Personal Microsoft Accounts
+> Let the Redirect URI field empty for now
+
+Click on the Register button to finalize the registration of the application
+At the end of the previous steps, you will be redirected on the Overview page of the new registered application
+Here, copy the Application (client) ID, because we will need it later
+Once this is done, go to the API Permissions section
+On this page, we will select the rights we need our application to have to answer to our needs.
+To do so, click on the + Add a permission button.
+In the pane that appears on the right on your screen, choose Microsoft Graph in the “Commonly used Microsoft APIs” section
+> Choose Delegated permissions as the type of permissions the application require
+
+Notes:
+- Delegated permissions: permissions granted to a signed-in user without extend his own permissions within Azure Active Directory on the tenant
+- Application permissions: permissions granted to the application with the admin consent (almost) always required
+You always have to check which kind of permission type is supported by the API you want to use before choose between this two options.
+> Then search and select the permissions you want to set on your application
+
+When it is done, you can click on the Add permissions button at the bottom of the pane
+Notes:
+For some of you wondering if they need to grant tenant-wide admin consent or not, I invite you to read the Microsoft documentation page about that.
+This other interesting Microsoft documentation page related to this subject will give you more insights to understand this mechanism.
+In our case, this is not required to continue, so we will let the situation as it is.
+Go to the Certificates & Secrets section
+Click on the + New client secret button
+Enter a meaningful and understandable Description
+Choose a retention period for the client secret you are creating for your application (options described below)
+- Client secret expires 1 year after creation
+- Client secret expires 2 years after creation
+- Client secret never expires
+Click on the Add button to finalize the creation of the client secret
+Then, copy the Client Secret value, because we will need it later
+Warning: If you do not copy the Client Secret value at this moment, and leave this page, you will lose it.
+
+At this moment, you should have:
+
+An application registered in Azure Active Directory with permissions for the Microsoft Graph API
+The Application (client) ID of the application copied somewhere safe
+The Client Secret value of the application copied somewhere safe
+And with all that, we will be able to pursue with the creation of the Microsoft Graph custom connector.
+
+Creation of the Microsoft Graph custom connector
+Once you have an application registered in Azure Active Directory for the Microsoft Graph API, you can follow the next steps to create a custom connector based on it:
+
+Open Power Apps or Power Automate
+Unfold the Data section
+Then, click on Custom Connectors
+At this moment, you should have:
+
+An application registered in Azure Active Directory with permissions for the Microsoft Graph API
+The Application (client) ID of the application copied somewhere safe
+The Client Secret value of the application copied somewhere safe
+And with all that, we will be able to pursue with the creation of the Microsoft Graph custom connector.
+
+Creation of the Microsoft Graph custom connector
+Once you have an application registered in Azure Active Directory for the Microsoft Graph API, you can follow the next steps to create a custom connector based on it:
+
+Open Power Apps or Power Automate
+Unfold the Data section
+Then, click on Custom Connectors
+
+Click on the + New custom connector button
+And select the Create from blank option
+Enter a meaningful and understandable Name (ex: “MS Graph Custom”), and then click on the Continue button
+On the first screen, you will be able to configure general properties of the custom connector
+> Upload a connector icon, or set an icon background color
+
+> Enter a meaningful and understandable Description (ex: Custom connector for the MS Graph API)
+
+> Let the Connect via on-premises data gateway option unchecked
+
+> Select the HTTPS option
+
+> In the Host field, enter the following value: graph.microsoft.com
+
+> In the Base URL field, enter the following value: /v1.0/
+
+Once it is all set on this screen, you can click on the Security -> button
+
+On the Security page, complete the information as described below
+> First, choose the OAuth 2.0 option in the Authentication type section
+
+> Next, in the Identity Provider field, select the Azure Active Directory option
+
+> In the Client id field, paste the Application (client) ID value copied during the application registration for the Microsoft Graph API in Azure Active Directory
+
+> In the Client secret field, paste the Client Secret value copied during the application registration for the Microsoft Graph API in Azure Active Directory
+
+> In the Login URL field, enter the following value: https://login.windows.net
+
+> In the Tenant ID field, enter the following value: common
+
+> In the Resource URL field, enter the following value: https://graph.microsoft.com
+
+> Let the Scope field empty
+
+Click on the Definition -> button to go to the next section
+Then, click on the Create connector button
+
+Go back to the Security section (by clicking on 2. Security in the process bar)
+Copy the value generated in the Redirect URL field on the Security page
+Go back to your application registered in Azure Active Directory for the Microsoft Graph API
+Open the Authentication section
+In the existing Redirect URI Web line, enter the Redirect URL copied few steps earlier (in the gif below I do that in the old experience page for the Authentication because I am more used to it, but, you can obviously do it also in the new one)
+And finish this update of the registered application by clicking on the Save button
+
+Once all this is done, you will be able to test the connection to your new custom connector by following the steps below:
+
+Go back to Power Apps (or Power Automate) where you were configuring your custom connector for the Microsoft Graph API (you should be on the Security section)
+Go to the Test section (by clicking on 4. Test in the process bar)
+Click on the + New connection button
+In the pop-up that appears, click on the Create button
+Connect with a Microsoft account
+If you get asked for, give the necessary authorizations to the custom connector by checking the Consent on behalf of your organization option
+If the custom connector you created is correctly configured, you will see a new connection with its status set to “Connected” in the list of connections.
+
+That’s awesome! But, for now, our custom connector does not have any action. So, let’s focus on this point in the next part.
+
+Configuration of an action in our new Microsoft Graph custom connector
+For the demonstration, I have selected the following Microsoft Graph service: Create team
+
+Follow the steps below to see how to configure this action in our new custom connector:
+
+Go to the Custom Connectors section in Power Apps (or Power Automate)
+Open in edition the custom connector we created earlier
+Go to the Definition section (by clicking on 3. Definition in the process bar)
+Click on the + New action button
+Complete the information in the General section of the page
+> Enter a meaningful and understandable Summary (ex: Add Team to Office 365 group)
+
+> Enter a meaningful and understandable Description (ex: Add a Team to an existing Office 365 group)
+
+> Enter a meaningful and understandable value without spaces in the Operation ID field (ex: AddTeamToO365Group)
+
+> Choose one of the available options for the Visibility (details here)
+
+Then, click on the + Import from sample button in the Request section of the page, and complete the fields in the pane that appears on the right of the screen
+> Select the Verb corresponding to your case (in our case, it is PUT)
+
+> Complete the URL field (in our case, the considered value is “https://graph.microsoft.com/v1.0/groups/{O365GroupID}/team”)
+
+> Complete the Headers field (in our case, the considered value is “Content-type application/json”)
+
+> In the Body field, enter a request sample of the service you are configuring (in our case, like the one below)
+
+{
+  "memberSettings": {
+    "allowCreateUpdateChannels": true
+  },
+  "messagingSettings": {
+    "allowUserEditMessages": true,
+    "allowUserDeleteMessages": true
+  },
+  "funSettings": {
+    "allowGiphy": true,
+    "giphyContentRating": "strict"
+  }
+}
+Click on the Import button, to finish the configuration of the Request part of your action
+In the Response section of the page, click on the + Add default response button
+> Complete the Headers field (in our case, the considered value is “Content-type application/json”)
+
+> In the Body field, enter a response sample of the service you are configuring (in our case, like the one below)
+
+{
+  "memberSettings": {
+    "allowCreateUpdateChannels": true,
+    "allowDeleteChannels": true,
+    "allowAddRemoveApps": true,
+    "allowCreateUpdateRemoveTabs": true,
+    "allowCreateUpdateRemoveConnectors": true
+  },
+  "guestSettings": {
+    "allowCreateUpdateChannels": true,
+    "allowDeleteChannels": true
+  },
+  "messagingSettings": {
+    "allowUserEditMessages": true,
+    "allowUserDeleteMessages": true,
+    "allowOwnerDeleteMessages": true,
+    "allowTeamMentions": true,
+    "allowChannelMentions": true
+  },
+  "funSettings": {
+    "allowGiphy": true,
+    "giphyContentRating": "strict",
+    "allowStickersAndMemes": true,
+    "allowCustomMemes": true
+  }
+}
+Click on the Import button, to finish the configuration of the Response part of your action
+Finalize the configuration of the action by clicking on the Update connector button
+
+Now that we have an action configured in our custom connector, we can test it directly from here. To do that, follow the procedure below:
+
+Click on the Test -> button, to access to the Test page of the custom connector
+In the Operations menu, select the action you just created
+Complete the fields, and click on the Test operation button
+Verify that the response you get correspond to what you were expecting
+
+As you can see, it is not really complicated to configure a custom connector for Power Apps and Power Automate that will use the Microsoft Graph API. And I am sure you can see the potential of this kind of solution.
+
+Perhaps, one day, Microsoft will release a standard connector for this services, but until this time you can follow this guide to unlock new possibilities in the Power Platform.
+
+I hope you enjoyed this “guide”. In next articles, we will go deeper in some scenarios where we will use this Microsoft Graph custom connector.
