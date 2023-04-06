@@ -62,7 +62,8 @@ The Application (client) ID of the application copied somewhere safe
 The Client Secret value of the application copied somewhere safe
 And with all that, we will be able to pursue with the creation of the Microsoft Graph custom connector.
 
-Creation of the Microsoft Graph custom connector
+*--------------------------------------Creation of the Microsoft Graph custom connector--------------------------------------*
+
 Once you have an application registered in Azure Active Directory for the Microsoft Graph API, you can follow the next steps to create a custom connector based on it:
 
 Open Power Apps or Power Automate
