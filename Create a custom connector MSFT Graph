@@ -97,7 +97,7 @@ On the Security page, complete the information as described below
 
 > In the Client secret field, paste the Client Secret value copied during the application registration for the Microsoft Graph API in Azure Active Directory
 
-> In the Login URL field, enter the following value: https://login.windows.net
+> In the Authorization URL field, enter the following value: https://login.windows.net
 
 > In the Tenant ID field, enter the following value: common
 
